@@ -962,7 +962,7 @@ function Export(){
 }
 function Import(){
 	let loadgame = "";
-	loadgame = prompt("Paste in your save WARNING: WILL OVERWRITE YOUR CURRENT SAVE");
+	loadgame = prompt("粘贴您的保存警告：将覆盖您当前的保存");
 	if (loadgame !="" ) {
 		loadgame=JSON.parse(atob(loadgame));
 		StarPoints=new Decimal(parseInt(loadgame.StarP));
