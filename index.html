@@ -1,0 +1,281 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Look at those beautiful stars">
+
+    <title>Constellation Builder</title>
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- import the webpage's client-side javascript file -->
+    <script src="math.js" defer></script>
+    <script src="complex.js" defer></script>
+    <script src="break_infinity.js" defer></script>
+    <script src="script.js" defer></script>
+    <style>
+    * {
+      box-sizing: border-box;
+    }
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    </style>
+     
+  </head>
+  <body style="background-color:#222;">
+	<script src="chs.js"></script>
+	<script src="core.js"></script>
+    <header>
+		<h1><span id="STARRED">0 Star Points</span><span id="BUDDING" hidden>, 0 leaf(ves)</span><span id="BOLTS" hidden>, 0 bolt(s)</span><span id="COMET" hidden>, 0 comet dust(s)</span></h1>
+    </header>
+	<audio id="Audio1">
+	  <source src="The Cosmos.mp3" type="audio/mp3">
+	</audio>
+	<audio id="Audio3">
+	  <source src="Thunder_on_the_Floor.mp3" type="audio/mp3">
+	</audio>
+	<audio id="Audio2">
+	  <source src="Falling Leaves.wav" type="audio/wav">
+	</audio>
+	<audio id="Audio4">
+	  <source src="Lava Lamps.mp3" type="audio/mp3">
+	</audio>
+	<audio id="Audio5">
+	  <source src="Peace Of Mind.mp3" type="audio/mp3">
+	</audio>
+	<script>
+	document.getElementById("Audio1").loop=true;
+	document.getElementById("Audio1").volume=0.1;
+	document.getElementById("Audio2").loop=true;
+	document.getElementById("Audio2").volume=0.1;
+	document.getElementById("Audio3").loop=true;
+	document.getElementById("Audio3").volume=0.1;
+	document.getElementById("Audio4").loop=true;
+	document.getElementById("Audio4").volume=0.1;
+	document.getElementById("Audio5").loop=true;
+	document.getElementById("Audio5").volume=0.1;
+	</script>
+	<div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'Stars',1)" id="StarsTab">Constellation</button>
+    <button class="tablinks" onclick="openCity(event, 'Bud',2)" id="BudTab" hidden>Leaves</button>
+    <button class="tablinks" onclick="openCity(event, 'Bolt',3)"  id="BoltTab" hidden>Bolts</button>
+    <button class="tablinks" onclick="openCity(event, 'Lava',4)" id="LavaTab" hidden>Comets</button>
+    <button class="tablinks" onclick="openCity(event, 'Settings',1)">Settings</button>
+    <button class="tablinks" onclick="openCity(event, 'About',1)">About</button>
+    <button class="tablinks" onclick="openCity(event, 'Help',1)" hidden>Q & A</button>
+	</div>
+    <div id="Stars" class="tabcontent">
+	<table><tr>
+	<td style="display:table-cell;">
+    <button type="button" onclick="StarReset()" class="tooltip">Reset Star Position<span class="tooltiptext">Q - Why should I bother ?<br>A - because it doesn't resets your Star Points AND add missing stars you would have bought</span></button><br>
+	<button type="button" onclick="AddStars()" id="AS">Add another star to the sky for<br>
+	<span id="S1Cost">10</span> Star Points</button>
+	<button type="button" onclick="StarSpeed()" class="tooltip">Power up your stars' speed for<span class="tooltiptext">Wait, that's USELESS !!!</span><br>
+	<span id="S2Cost">10</span> Star Points</button>
+	<button type="button" onclick="StarLinks()">Link stars together more for<br>
+	<span id="S3Cost">10</span> Star Points</button>
+	<button type="button" onclick="StarStruck()" id='TSS'>Make constellation scanner<br>automation faster for<br>
+	<span id="S4Cost">10</span> Star Points</button>
+	<button type="button" onclick="PrestigeStars()" hidden id="PresStar">Prestige for ...<br>plant matter ?</button><br>
+	<canvas id="myCanvas0" width="512" height="512"></canvas>
+    </td>
+	</tr></table>
+	</div>
+	<div id="Bud" class="tabcontent" hidden>
+	<table><tr>
+	<td style="display:table-cell;" >
+	<span style="color:#FFFFFF">Your growing leaves have generated <span id="LM">0</span> leaf power, which multiplies your Star Power gain by <span id="LM2">1</span></span><br>
+    <button type="button" onclick="LeafUp1()" id="BU">Make the length of stars<br>power themselves for<br><span id="LU1">1</span> leaf</button>
+	<button type="button" onclick="twigUp()" id="SpeedU2">Speed up leaf pattern progress for<br>
+	<span id="TCost">2</span> leaves</button>
+	<button type="button" onclick="LeafUp2()" id="LU">Your amount of stars<br>multiply your leaves<br>10 leaves</button>
+	<button type="button" onclick="TSUp2()" id="BoltUp1.2" class="tooltip" hidden><span class="tooltiptext">Green stars cubes the star power amount given by links using them !</span>Grow up some stars<br>and have 20% chance to<br>get green stars for<br>
+	<span id="TSUp2">10000</span> leaves</button>
+	<button type="button" onclick="newReset()" disabled id="NL" class="tooltip">Make a new pattern<span class="tooltiptext">Multiplies Leaf Power's Power by 1.5</span></button>
+	<button type="button" onclick="SaveLeaves()"><a id="DFWMB">Save as PNG</a></button>
+	<button type="button" onclick="GetBolts()" hidden id="PresBud">Call for the god of thunder<br>Francis (what a terrifying name)<br>to capture electrical bolts<br>on your pile of twigs</button><br>
+	<canvas id="myCanvas" width="256" height="256"></canvas>
+    </td>
+	</tr></table>
+	</div>
+	<div id="Bolt" class="tabcontent" hidden>
+	<table><tr>
+	<span style="color:#FFFFFF">Square root of bolts plus one multiply your base Star point gain</span>
+	<td style="display:table-cell;">
+	<button type="button" onclick="TSUp()" id="BoltUp1" class="tooltip"><span class="tooltiptext">Yellow stars square the star power amount given by links using them !</span>Charge up some stars<br>and have 20% chance to<br>get yellow stars for<br>
+	<span id="TSUp">1</span> bolts</button>
+	<button type="button" onclick="BoltUp2()" id="BoltUp2">Star points also power<br>up Bolts given<br>
+	Cost 10 bolts</button>
+	<button type="button" onclick="BoltUp3()" id="BoltUp3">Bolts also power<br>up Leaves given<br>
+	Cost 20 bolts</button>
+	<button type="button" onclick="BoltUp4()" id="BoltUp4">Leaves power also power<br>up Bolts given<br>
+	Cost 50 bolts</button>
+	<button type="button" onclick="PrestigeComet()" id="PresComet">Cast lightning upon<br>your stars to tears them<br>
+	apart and gather what's<br>left behind<br>(Req : 1000 bolts)</button><br>
+	<canvas id="myCanvas1" width="512" height="512"></canvas>
+    </td>
+	</tr></table>
+	</div>
+	<div id="Lava" class="tabcontent" hidden>
+	<span style="color:#FFFFFF">1 + your dust amount multiplies your starpoint gain (before nerf) !</span>
+	<table><tr>
+	<td style="display:table-cell;">
+	<button type="button" onclick="CometUp1()" id="CometUp1"  class="tooltip"><span class="tooltiptext">This upgrade is TOTALLY PERMANENT !</span>Passively earn 10%<br>of leaves on prestige<br>per seconds for<br>
+	Cost <span id="C1Cost">1</span> dust</button>
+	<button type="button" onclick="CometUp2()" id="CometUp2"  class="tooltip"><span class="tooltiptext">This upgrade is TOTALLY PERMANENT too !</span>Passively earn 10%<br>of bolts on prestige<br>per seconds for<br>
+	Cost <span id="C2Cost">10</span> dusts</button>
+	<button type="button" onclick="CometUp3()" id="CometUp3">Star speed affect<br>your gains by powering<br>it by the log of<br>the sum of speeds<br>
+	Cost 10 dusts</button>
+    <button type="button" disabled onclick="TSUp3()" id="BoltUp1.3" class="tooltip"><span class="tooltiptext">Red stars hypercubes (^4) the star power amount given by links using them !<br><br>Plus, it stops both green and yellow stars upgrades from disappearing upon comet prestige !<br><br>Requires both preceding star color upgrades to unlock it</span>Charge up some stars<br>and have 20% chance to<br>get red stars for<br>
+	<span id="TSUp3">1</span> dust</button>
+	<button type="button" onclick="newReset()" disabled class="tooltip"><span class="tooltiptext">Actually, it's the constellation one that works for it !</span>Reset the pattern</button><br>
+	<canvas id="myCanvas2" width="512" height="512"></canvas>
+    </td>
+	</tr></table>
+	</div>
+	<div id="Settings" class="tabcontent" hidden>
+	<button type="button" onclick="save()" class="tooltip">Save
+      <span class="tooltiptext">Autosaves every 10s</span></button>
+      <button type="button" onclick="HReset()" class="tooltip">Hard Reset
+      <span class="tooltiptext">Resets everything</span></button>
+      <br><button type="button" onclick="Export()" class="tooltip">Export</button>
+      <button type="button" onclick="Import()" class="tooltip">Import</button>
+	<input type="checkbox" id="Autosave" checked><span style="color:#FFFFFF"> Enable Autosave</span><br>
+	<input type="range" min="0" max="200" value="100" class="slider" id="MUSICISHERE"><span style="color:#FFFFFF" id="VOL"></span><br>
+	<span style="color:#FFFFFF">BE WARNED THAT THIS GAME WON'T RUN OFFLINE OR IF THE TAB ISN'T FOCUSED ON<br>
+	BE ALSO WARNED THAT WHEN LAUNCHING THE GAME THE IMAGES ARE RESETTED SINCE IT WOULD TAKE WAY TOO LONG TO SAVE THEM (I guess)</span>
+	<span style="color:#FFFFFF"><br><br>Musics :<br><br>
+	Music by : Sirius Beat - The Cosmos<br>
+	Link : http://youtu.be/Bkg08NvtvBU<br><br>
+	➞ Artist: Ron Gelinas<br>
+	➞ Track Title: Falling Leaves (Original Mix)<br>
+	➞ Link to Track: youtu.be/9PSXZb6VPb4<br><br>
+	Thunder On The Floor<br>
+	Link : https://www.youtube.com/watch?v=dtk2gPb6WHA<br><br>
+	Lava Lamps<br>
+	Link : https://www.youtube.com/watch?v=gUhhuNbX3B0<br><br>
+	Peace Of Mind - By Kevin MacLeod<br>
+	Link : https://www.youtube.com/watch?v=8SXjY9sLGXo<br><br>
+	</span>
+	</div>
+	<div id="About" class="tabcontent" style="color:#FFFFFF" hidden>
+		<p>Here is a link to the discord server of the game : <a href="https://discord.gg/xTzYrey">Click me! i'm innoffensive</a></p>
+		<p>The server is pretty empty and the main purpose of it was not to be about that incremental game, but a RPG that i'm programming. Still, it has a Fourier bot you can mess with!</p>
+		<br>
+		<br>Changelog<br>
+		<br>0.6.2 Seeing Red stars<br>
+                Some other bugs are being fixed, and you can progress further with this red star upgrade now !<br>
+		For the next prestige layer, you'll get to unlock new features along the way<br>
+		Feel free to tell me some feature you'd like to see happen on the discord !<br>
+		<br>0.6.1 All the little fix<br>
+                I fixed lots of typos and a bug where the bolt upgrades were locked upon comet prestige<br>
+		For the next prestige layer, you'll get to unlock new features along the way<br>
+		Feel free to tell me some feature you'd like to see happen on the discord !<br>
+		<br>0.6 Coming in : Comets !<br>
+		Nice, look at the green one !<br>
+		Added fourth layer out of five !<br>
+		Have fun with all those QoL upgrades !<br>
+		I'll work on another day to make the last upgrade of that section work, plus, maybe expect small bugfix updates<br>
+		<br>0.5.1 Muting : The slider<br>
+		Still working on stuff, I've been asked about a mute button tho<br>
+		So you know what ?<br>
+		I made it a slider !<br>
+		<br>0.5 The theory of everything<br>
+		Whereas I've added something new so you could have new fun in the constellation tab...<br>
+		I'm preparing what's left of the updates by implementing already all the variables I'd be needing<br>
+		The next prestige will be at some value of bolts, maybe 1000 ? I dunno, but I can tell you that this prestige will be about QoL content !<br>
+		<br>0.4.1 Emptyfying : Emptyness<br>
+		What does that even mean ?<br>
+		Next update gets a new button if you already went up to purchasing all bolts upgrades !<br>
+		It will cost 10 000 leaves, but persists on bolt prestige !<br>
+		<br>0.4 The sound of nerf<br>
+		It's almost a small update<br>
+		Here are the background musics Implemented, I just have to check if it works correctly now...<br>
+		Also, I nerfed Star Power production after 1e10<br>
+		<br>0.3.4 Limiting : Limits<br>
+		I heard the game became laggy at some points, it should now be all fixed !<br>
+		There's a vote for background musics, you should go take a look and vote too !<br>
+		Unless more fixing duty, this is the last update before 0.4 !<br>
+		<br>0.3.3 Precising : Precision<br>
+		It became quite unreadable, right ?<br>
+		Now that's fixed !<br>
+		<br>0.3.2 Tweaking : Tweaks<br>
+		Ok, bolts cost *might* be too high<br>
+		Lowered Bolts upgrade's costs<br>
+		<br>0.3.1 Saving : Saved<br>
+		Saving is back guys !<br>
+		Updated text color too, it should always be readable now<br>
+		Next update, unless bug fixing required, will add new upgrades in other tabs if you unlocked some in the bolts prestige !<br>
+		<br>0.3 Thundering : Bolts<br>
+		Woohoo, bolts !<br>
+		Added third layer<br>
+		I dunno the bolts amount for next prestige, stuff should grow fast now<br>
+		Dark background might make it look WAY better<br>
+		Saves coming on the next small update !<br>
+		<br>0.2.1 Tool-tipping : At the tip of your tool<br>
+		I'm not yet crazy, I assure you !<br>
+		Added some tooltips, and changed some<br>
+		<br>0.2 Leaving : Leaves<br>
+		Having fun with changelogs<br>
+		Added second layer<br>
+		I guess 100 Leaves to the next prestige is ok ?<br>
+		No saves yet<br>
+		TOOLTIPS COMING !<br>
+		<br>0.1 Starring : Stars<br>
+		Added first layer<br>
+		Reworked some stuff not yet unlockable<br>
+		1000 Star Points needed for the first prestige, that SHOULD speed up everything a bit<br>
+		
+	</div>
+	<div id="Help" class="tabcontent" hidden>
+	The game is slow !/The game is laggy !<br><br>
+	The game starts slow because it will make you hit the laggy part later, i'm currently working on improving that but doesn't happen to make significant improvements...
+	</div>
+	<script>
+    function openCity(evt, cityName, musicNum) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+	  for (i = 1; i < 5; i++) {
+		document.getElementById("Audio"+i).pause()
+	  }
+	  document.getElementById("Audio"+musicNum).play()
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    document.getElementById("StarsTab").click();
+	</script>
+	<!--客服 开始-->
+<script src="//g8hh.github.io/static/js/jquery.min.js"></script>
+<link rel="stylesheet" href="//g8hh.github.io/static/css/kf.css" type="text/css" media="screen" charset="utf-8">
+<script src="//g8hh.github.io/static/js/kf.js"></script>
+<!-- 客服 结束 -->
+<!--站长统计-->
+    <div style="display: none">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?828597e93cee632465679b7ef35edfd5";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>    </div>
+  </body>
+</html>
